@@ -1,0 +1,14 @@
+
+server:
+  port: 8082
+
+logging:
+  config:  classpath:logback.xml
+
+config:
+  netty:
+    http-port: 8666
+  server:
+    serverlist:
+      - 127.0.0.1:8088
+      - 192.168.1.103:8088
