@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: swork
+server:
+  port: 8086
+#  servlet:
+#    context-path: /s
