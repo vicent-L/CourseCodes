@@ -1,0 +1,44 @@
+package com.lzg.multi.datasource.config;
+
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+import javax.sql.DataSource;
+import java.util.Map;
+
+/**
+ * @Author lzg
+ * @Date 2021-06-20 16:09
+ */
+public class DynamicDataSource extends AbstractRoutingDataSource {
+
+    private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal<>();
+
+    /**
+     * @param defaultTargetDataSource 默认数据源
+     * @param targetDataSources 目标数据源
+     */
+    public DynamicDataSource(DataSource defaultTargetDataSource, Map<Object, Object> targetDataSources) {
+        super.setDefaultTargetDataSource(defaultTargetDataSource);
+        super.setTargetDataSources(targetDataSources);
+        super.afterPropertiesSet();
+    }
+
+    @Override
+    protected Object determineCurrentLookupKey() {
+        return getDataSource();
+    }
+
+    public static void setDataSource(String dataSource) {
+        CONTEXT_HOLDER.set(dataSource);
+    }
+
+    public static String getDataSource() {
+        return CONTEXT_HOLDER.get();
+    }
+
+    public static void clearDataSource() {
+        CONTEXT_HOLDER.remove();
+    }
+
+}
+
