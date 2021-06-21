@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: rmsData
+  datasource:
+    url: jdbc:mysql://192.168.1.104:3306/test2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    hikari:
+      maximum-pool-size: 16
+      minimum-idle: 2
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+
+root-dir: D:/works/dataSource
+
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: ${root-dir}/log
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+server:
+  port: 8090
+
+
