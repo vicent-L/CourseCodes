@@ -1,0 +1,44 @@
+# 配置真实数据源
+dataSources:
+  # 配置第 1 个数据源
+  ds_0: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3316/ds_0?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+  # 配置第 2 个数据源
+  ds_1: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3326/ds_1?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+
+rules:
+  # 配置分片规则
+  - !SHARDING
+    tables:
+      # 配置 order_master 表规则
+      order_master:
+        actualDataNodes: ds_${0..1}.order_master_${0..1}
+        # 配置分库策略
+        databaseStrategy:
+          standard:
+            shardingColumn: user_id
+            shardingAlgorithmName: database_inline
+        # 配置分表策略
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: table_inline
+
+
+    # 配置分片算法
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds_${user_id % 2}
+      table_inline:
+        type: INLINE
+        props:
+          algorithm-expression: order_master_${order_id % 2}
