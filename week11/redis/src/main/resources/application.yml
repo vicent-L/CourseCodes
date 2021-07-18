@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    io:
+      kimmking:
+        cache :
+          subpub: DEBUG
+
+
+# 作业，在这里使用spring boot配置各项内容，
+
+spring:
+  redis:
+    host: 192.168.1.104
+    port: 6379
+    password:
+    redisson:
+      # 配置单点模式
+#      config: classpath:redisson.yml
+      file: classpath:redisson.yml
+    jedis:
+      pool:
+        max-active: 8  #最大连接数
+        max-wait: -1 #最大阻塞等待时间(负数表示没限制)
+        max-idle: 8 #最大空闲
+debug: true
