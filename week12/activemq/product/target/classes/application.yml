@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /product
+spring:
+  application:
+    name: mq-producter
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://192.168.1.103:61616
+    pool:
+      # 是否用 PooledConnectionFactory 代替普通的 ConnectionFactory
+      enabled: true
+      max-connections: 10
+      #空闲的连接过期时间，默认为30秒
+      idle-timeout: 30000
+    #true 表示使用内置的MQ，false则连接服务器
+    in-memory: false
+  jms:
+    cache:
+      session-cache-size: 100
+      #    采用队列模式为false，主题模式为true
+    pub-sub-domain: false
+    template:
+      receive-timeout: 100
+      #      是否持久化   若需要持久化，只需要在生产者设置
+      delivery-mode: persistent
+queueName: publish.queue
+topicName: publish.topic
