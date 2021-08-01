@@ -1,0 +1,22 @@
+# kafka
+spring:
+  kafka:
+    # kafka服务器地址(可以多个)
+    bootstrap-servers: 192.168.1.104:9092,192.168.1.104:9093,192.168.1.104:9094
+    consumer:
+      # 指定一个默认的组名
+      group-id: kafka1
+      auto-offset-reset: earliest
+      # key/value的反序列化
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # key/value的序列化
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 批量抓取
+      batch-size: 65536
+      # 缓存容量
+      buffer-memory: 524288
+      # 服务器地址
+      bootstrap-servers: 192.168.1.104:9092,192.168.1.104:9093,192.168.1.104:9094
